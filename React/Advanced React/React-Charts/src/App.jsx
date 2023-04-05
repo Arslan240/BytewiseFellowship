@@ -1,0 +1,90 @@
+import { useState } from 'react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import './App.css'
+
+
+const data = [
+  {
+    name: 'Page A',
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Page B',
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: 'Page C',
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: 'Page D',
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: 'Page E',
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: 'Page F',
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: 'Page G',
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+
+
+function App() {
+  const [opacity, setOpacity] = useState({
+    uv:1,
+    pv:1,
+    amt:1,
+  })
+
+  const handleMouseEnter = (o) => {
+    const {dataKey} = o;
+    setOpacity(prevState => ({ ...prevState, [dataKey]: 0.8 }));
+    console.log(o)
+  }
+
+  const handleMouseLeave = (o) => {
+    const {dataKey} = o;
+    setOpacity(prevState => ({...prevState, [dataKey]:1}));
+    
+  }
+
+  return (
+      <LineChart width={600} height={400} data={data}>
+        <Line type="monotone" dataKey="uv" strokeOpacity={opacity.uv} stroke='#8884d8'/>
+        <Line type="montone" dataKey="amt" strokeOpacity={opacity.amt} stroke='#7debfc'/>
+        <Line type="monotone" dataKey="pv" strokeOpacity={opacity.pv} stroke='#c5fc7d'/>
+        <CartesianGrid stroke='#737da8' strokeDasharray="5 5"/>
+        <XAxis dataKey="name" stroke='#5f9d8f'/>
+        <YAxis stroke='#5f9d8f'/>
+        <Tooltip/>
+        <Legend 
+          onMouseEnter={handleMouseEnter} 
+          onMouseLeave={handleMouseLeave}
+          align='center'
+          layout='horizontal'
+        />
+      </LineChart>
+  )
+}
+
+export default App
