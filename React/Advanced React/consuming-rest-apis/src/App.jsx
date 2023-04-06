@@ -47,10 +47,11 @@ function App() {
         title:title,
         body:body,
         userId: Math.random().toString(36).slice(2),
-        id: nanoid()
+        id: nanoid(),
+        postId:nanoid(),
       })
       let {data} = response 
-
+      console.log(data)
       // FETCH API
       // let response = await fetch(postUrl, {
       //   method: 'POST',
@@ -87,7 +88,13 @@ function App() {
       let response = await client.delete(`${id}`)
       if(response.status){
         setPosts(prevPosts => (
-          prevPosts.filter(post => post.id !== id)
+          prevPosts.filter(post => {
+            if(post?.postId){
+              return post.postId !== id;
+            }else if(post?.id){
+              return post.id !== id;
+            }
+          })
         ))
       }
 
@@ -126,8 +133,7 @@ function App() {
           </form>
         </div>
       }
-      <p>Unfortunately, JSONplaceholder api doesn't allow to pass unique ids for each post. <br/> So, this app can only delete 1 custom post.</p>
-
+      
       {!toggle &&
         <div className="button">
           <button onClick={e => setToggle(!toggle)}>Add Post</button>

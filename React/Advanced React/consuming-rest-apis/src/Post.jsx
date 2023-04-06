@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React from 'react'
 import styled from 'styled-components'
 
@@ -31,18 +32,23 @@ const PostContainer = styled.div`
     }
 `
 
-const Post = ({post, deletePost}) => {
-    const {title, body, id, userId} = post;
+const Post = ({ post, deletePost }) => {
+    const { title, body, id, userId, postId } = post;
     console.log(id)
-  return (
-    <PostContainer>
-        <h2 className="post-title">{title}</h2>
-        <p className="post-body">{body}</p>
-        <div className="button" onClick={() => deletePost(id)}>
-            <div className="delete-btn" >Delete</div>
-        </div>
-    </PostContainer>
-  )
+
+    return (
+        <PostContainer>
+            <h2 className="post-title">{title}</h2>
+            <p className="post-body">{body}</p>
+            <div className="button" onClick={() => {
+                if(post?.postId) deletePost(postId)
+                else if(post?.id) deletePost(id)
+            }
+            }>
+                <div className="delete-btn" >Delete</div>
+            </div>
+        </PostContainer>
+    )
 }
 
 export default Post
