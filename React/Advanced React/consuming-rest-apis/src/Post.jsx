@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const PostContainer = styled.div`
-    max-width:500px;
+    width:500px;
     padding:20px;
     border: 2px solid;
     margin-bottom:20px;
